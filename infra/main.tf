@@ -18,10 +18,18 @@ module "eks" {
 
 data "aws_eks_cluster" "example" {
   name = module.eks.cluster_name
+
+  depends_on = [
+    module.eks
+  ]
 }
 
 data "aws_eks_cluster_auth" "example" {
   name = module.eks.cluster_name
+
+  depends_on = [
+    module.eks
+  ]
 }
 
 module "k8s" {
