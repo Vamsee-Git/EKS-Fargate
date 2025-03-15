@@ -16,14 +16,22 @@ module "eks" {
   namespace            = "default"
 }
 
+data "aws_eks_cluster" "example" {
+  name = module.eks.cluster_name
+}
+
+data "aws_eks_cluster_auth" "example" {
+  name = module.eks.cluster_name
+}
+
 module "k8s" {
   source = "./modules/k8s"
 
   kubeconfig = {
-    host                   = "https://example-cluster.us-west-2.eks.amazonaws.com"
-    client_certificate     = filebase64("${path.module}/certs/client-cert.pem")
-    client_key             = filebase64("${path.module}/certs/client-key.pem")
-    cluster_ca_certificate = filebase64("${path.module}/certs/ca-cert.pem")
+    host                   = data.aws_eks_cluster.example.endpoint
+    client_certificate     = data.aws_eks_cluster_auth.example.certificate_authority.data
+    client_key             = data.aws_eks_cluster_auth.example.client_key
+    cluster_ca_certificate = data.aws_eks_cluster.example.certificate_authority.data
   }
 
   namespace        = "default"
