@@ -34,7 +34,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: arn:aws:iam::664418994073:role/service-catalog-webApp-github
-          aws-region: us-east-1
+          aws-region: ap-south-1
           id-token: true
 
       - name: List Directory Contents
