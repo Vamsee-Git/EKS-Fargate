@@ -1,7 +1,6 @@
 provider "kubernetes" {
   host                   = var.kubeconfig["host"]
-  client_certificate     = base64decode(var.kubeconfig["client_certificate"])
-  client_key             = base64decode(var.kubeconfig["client_key"])
+  token                  = var.kubeconfig["token"]
   cluster_ca_certificate = base64decode(var.kubeconfig["cluster_ca_certificate"])
 }
 
@@ -58,5 +57,27 @@ resource "kubernetes_service" "example" {
     }
 
     type = var.service_type
+  }
+}
+
+resource "kubernetes_ingress" "example" {
+  metadata {
+    name      = var.ingress_name
+    namespace = var.namespace
+  }
+
+  spec {
+    rule {
+      http {
+        path {
+          path = var.ingress_path
+
+          backend {
+            service_name = kubernetes_service.example.metadata[0].name
+            service_port = var.service_port
+          }
+        }
+      }
+    }
   }
 }
