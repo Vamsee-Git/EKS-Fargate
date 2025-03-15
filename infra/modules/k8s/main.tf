@@ -60,25 +60,3 @@ resource "kubernetes_service" "example" {
     type = var.service_type
   }
 }
-
-resource "kubernetes_ingress" "example" {
-  metadata {
-    name      = var.ingress_name
-    namespace = var.namespace
-  }
-
-  spec {
-    rule {
-      http {
-        path {
-          path = var.ingress_path
-
-          backend {
-            service_name = kubernetes_service.example.metadata[0].name
-            service_port = var.service_port
-          }
-        }
-      }
-    }
-  }
-}
