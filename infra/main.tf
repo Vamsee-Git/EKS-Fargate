@@ -29,8 +29,7 @@ module "k8s" {
 
   kubeconfig = {
     host                   = data.aws_eks_cluster.example.endpoint
-    client_certificate     = data.aws_eks_cluster_auth.example.client_certificate
-    client_key             = data.aws_eks_cluster_auth.example.client_key
+    token                  = data.aws_eks_cluster_auth.example.token
     cluster_ca_certificate = data.aws_eks_cluster.example.certificate_authority[0].data
   }
 
