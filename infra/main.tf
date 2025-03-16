@@ -45,11 +45,11 @@ module "k8s" {
   deployment_name  = "example-deployment"
   replicas         = 2
   app_label        = "example-app"
-  container_image  = "nginx:latest"
-  container_name   = "nginx"
-  container_port   = 80
-  service_name     = "example-service"
-  service_port     = 80
+  container_image  = "664418994073.dkr.ecr.us-east-1.amazonaws.com/appointment-service:latest"
+  container_name   = "appointment"
+  container_port   = 3001
+  service_name     = "appointment-service"
+  service_port     = 3001
   service_type     = "LoadBalancer"
   ingress_name     = "example-ingress"
   ingress_path     = "/"
