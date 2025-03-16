@@ -34,6 +34,15 @@ resource "kubernetes_deployment" "example" {
           port {
             container_port = var.container_port
           }
+
+          readiness_probe {
+            http_get {
+              path = "/"
+              port = var.container_port
+            }
+            initial_delay_seconds = 5
+            period_seconds        = 10
+          }
         }
       }
     }
